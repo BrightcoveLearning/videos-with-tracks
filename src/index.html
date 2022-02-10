@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title></title>
+  <style>
+    /* * The body style is just for the
+ * background color of the codepen.
+ * Do not include in your code.
+ */
+    body {
+      background-color: #111;
+      color: #f5f5f5;
+      font-family: sans-serif;
+      margin: 2em;
+    }
+
+    /*
+ * Styles essential to the sample
+ * are below
+ */
+    .bcls-code {
+      color: #111;
+      font-family: "Source Code Pro", monospace;
+      padding: 1em;
+      width: 90%;
+      min-height: 5em;
+      background-color: #fff;
+      font-size: 1rem;
+    }
+
+    .bcls-button {
+      padding: 0.5em;
+      background-color: #333;
+      border: 1px yellow solid;
+      border-radius: 0.5em;
+      color: yellow;
+      cursor: pointer;
+    }
+
+    fieldset {
+      color: #64aab2;
+      border: 1px #64aab2 solid;
+      border-radius: 0.5em;
+    }
+
+    code {
+      color: #e4b842;
+      font-family: "Source Code Pro", monospace;
+    }
+
+    table {
+      border-collapse: collapse;
+      border: 0.1em solid #e4b842;
+    }
+
+    th,
+    td {
+      border: 0.1em solid #e4b842;
+      padding: 0.5em;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Video Report: Videos with Text Tracks</h2>
+  <details>
+    <summary>How to get API credentials</summary>
+    <p>To get API credentials, follow the instructions in <a href="https://studio.support.brightcove.com/admin/managing-api-authentication-credentials.html" target="_blank">Managing API Authentication Credentials</a></p>
+    <p>The only permission needed for this app is <strong>CMS &gt; Video Read</strong> (but you can add others if you want to use these credentials for other purposes):</p>
+    <figure class="bcls-figure">
+      <img class="bcls-image" src="https://apis.support.brightcove.com/assets/images/cms/code-samples/video-read-permissions.png" alt="API Permissions Needed">
+      <figcaption class="bcls-caption--image">API Permissions Needed</figcaption>
+    </figure>
+  </details>
+  <br>
+  <section class="bcls-section" id="workingSample">
+    <fieldset class="bcls-fieldset">
+      <legend>Input</legend>
+      <p>If you do not enter account information, a Brightcove sample account will be used.</p>
+      <p>Account id:
+        <input id="account_id" type="text" value="" placeholder="1752604059001">
+      </p>
+      <p>Client id:
+        <input id="client_id" type="text" size="60" value="" placeholder="c5d0a622-5479-46d8-8d8a-5f034b943fab">
+      </p>
+      <p>Client secret:
+        <input id="client_secret" type="text" size="60" value="" placeholder="w7NQYu0vUloM4GYYy2SXAxrvyFpt8fwI35qAFZcS13-VIgs0itwKNsAwHOS80sOWK">
+      </p>
+      <p>Videos to retrieve:
+        <select name="videoCount" id="videoCount">
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="500">500</option>
+          <option value="All">All</option>
+        </select>
+      </p>
+      <aside class="bcls-aside bcls-aside--warning">If you select
+        <code>All</code>, this may take awhile!
+      </aside>
+      <p>Optional: start with this video number (for example, if you have already retrieved 100 videos, enter "101"):
+        <input type="text" id="start_offset" value="0" style="display:inline;">
+      </p>
+      <p>
+        <button class="bcls-button" id="makeReport">Generate the Report</button>
+      </p>
+    </fieldset>
+    <fieldset class="bcls-fieldset">
+      <legend>Log</legend>
+      <div id="logger" style="color:rgb(237, 104, 38)">
+        <p id="logText">Waiting for input...</p>
+      </div>
+      <p>Current API request</p>
+      <textarea id="apiRequest" class="bcls-code">API request will appear here...</textarea>
+    </fieldset>
+  </section>
+  <section id="text_track_report" class="bcls-section">
+    <h2>Reports</h2>
+    <h3>Videos with Text Tracks</h3>
+    <h4>CSV Data</h4>
+    <p>Copy and paste the data below into a an empty text file, and save it with a .csv extension. You can then open the file to view it in your spreadsheet application.</p>
+    <textarea name="text_track_csv" id="text_track_csv" class="bcls-code" style="height:15em;"></textarea>
+  </section>
+  <h4>Table Display</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Text Tracks</th>
+        <th>Languages</th>
+        <th>Kinds</th>
+      </tr>
+    </thead>
+    <tbody id="text_track_table"></tbody>
+  </table>
+  </section>
+
+  <section id="no_text_tracks_report" class="bcls-section">
+    <h3>Videos without Text Tracks</h3>
+    <h4>CSV Data</h4>
+    <p>Copy and paste the data below into a an empty text file, and save it with a .csv extension. You can then open the file to view it in your spreadsheet application.</p>
+    <textarea name="no_text_tracks_csv" id="no_text_tracks_csv" class="bcls-code" style="height:15em;"></textarea>
+  </section>
+  <h4>Table Display</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody id="no_text_tracks_table"></tbody>
+  </table>
+  </section>
+
+  <script src="texttracks.js">
+  </script>
+</body>
+
+</html>
