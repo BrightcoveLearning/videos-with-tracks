@@ -99,6 +99,16 @@ var BCLS = (function (window, document) {
     }
   }
 
+  /**
+   * remove all children from a node
+   * @param (object) parent - the parent element
+   */
+  function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+  }
+
   function writeReport(videos, tableEl, csvEl) {
     var i,
       iMax,
@@ -355,8 +365,12 @@ var BCLS = (function (window, document) {
     // button event handlers
     makeReport.addEventListener("click", function () {
       // in case of re-run, clear the results
+      videos_with_tracks = [];
+      videos_without_tracks = [];
       no_text_tracks_csv.textContent = "";
       text_track_csv.textContent = "";
+      removeAllChildNodes(text_track_table);
+      removeAllChildNodes(no_text_tracks_table);
       // get the inputs
       client_id = client_id_element.value;
       client_secret = client_secret_element.value;
@@ -364,7 +378,12 @@ var BCLS = (function (window, document) {
         ? account_id_element.value
         : "1752604059001";
       totalVideos = getSelectedValue(videoCount);
-      first_offset = start_offset.value;
+      if (start_offset.value > 0) {
+        first_offset = parseInt(start_offset.value) - 1;
+      } else {
+        first_offset = 0;
+      }
+
       // only use entered account id if client id and secret are entered also
       if (
         !isDefined(client_id) ||
